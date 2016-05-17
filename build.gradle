@@ -1,0 +1,17 @@
+group 'fr.beapp'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.2.1'
+
+    testCompile 'junit:junit:4.11'
+}
