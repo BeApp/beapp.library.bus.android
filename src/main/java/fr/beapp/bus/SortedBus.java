@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * When an event is sent, we retrieve executors listening for the event's class and call them. If one of the executors mark the event as consumed (ie: return <code>true</code>) we stop the propagation to this executor
  * </p>
- * <p>Be careful : Multiple executors may be registered with the same priority level for a same class. But there is no guaranty on execution order for these executors</p>
+ * <p>Be careful : Multiple executors can't be registered with the same priority level for a same class./p>
  */
 public class SortedBus {
 
@@ -103,6 +103,23 @@ public class SortedBus {
 	}
 
 	/**
+	 * Unregister all executors for a given class
+	 *
+	 * @param classListened The class listened by the executor
+	 * @return <code>true</code> if the executors were found and removed, <code>false</code> otherwise
+	 */
+	public synchronized <T> boolean unregisterAll(Class<T> classListened) {
+		return allExecutors.remove(classListened) != null;
+	}
+
+	/**
+	 * Unregister all executors
+	 */
+	public synchronized void unregisterAll() {
+		allExecutors.clear();
+	}
+
+	/**
 	 * An executor interface to implement in order to handle received events.
 	 */
 	public interface Executor<T> {
@@ -115,7 +132,7 @@ public class SortedBus {
 
 	private static class PriorityExecutor implements Comparable<PriorityExecutor> {
 		private static final AtomicInteger nextExecutorId = new AtomicInteger(1);
-		
+
 		private final int id;
 		private final int priority;
 		private final Executor executor;
