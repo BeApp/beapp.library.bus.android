@@ -8,10 +8,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * This class provides a bus mechanism with priority and event consumption.
  * When registering to a given event class to listen, a priority must be chose too in order to order the registration.
- * <p>
- * When an event is sent, we retrieve executors listening for the event's class and call them. If one of the executors mark the event as consumed (ie: return <code>true</code>) we stop the propagation to this executor
- * </p>
- * <p>Be careful : Multiple executors can't be registered with the same priority level for a same class./p>
+ * <p>When an event is sent, we retrieve executors listening for the event's class and call them. If one of the executors mark the event as consumed (ie: return <code>true</code>) we stop the propagation to this executor</p>
+ * <p>Be careful : Multiple executors can't be registered with the same priority level for a same class.</p>
  */
 public class SortedBus {
 
