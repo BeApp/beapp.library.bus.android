@@ -1,6 +1,3 @@
-group 'fr.beapp'
-version '1.0-SNAPSHOT'
-
 repositories {
     jcenter()
 }
@@ -15,3 +12,25 @@ dependencies {
 
     testCompile 'junit:junit:4.11'
 }
+
+ext {
+    libraryName = 'Beapp bus'
+    libraryGroupId = 'fr.beapp.bus'
+    libraryArtifactId = 'bus'
+    libraryVersion = '1.0'
+    libraryPackaging = 'jar'
+
+    libraryDescription = 'A simple bus library based on RxJava or a sorted version based on executors'
+
+    siteUrl = 'https://bitbucket.org/beappers/beapp.bus.andro'
+    gitUrl = 'git@bitbucket.org:beappers/beapp.bus.andro.git'
+
+    developerId = 'dvilleneuve'
+    developerName = 'Damien Villeneuve'
+    developerEmail = 'd.villeneuve@beapp.fr'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+apply from: 'https://bitbucket.org/beappers/beapp.gradle/raw/master/publish-library.gradle'
