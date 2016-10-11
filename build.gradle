@@ -25,7 +25,7 @@ ext {
     libraryName = 'Beapp bus'
     libraryGroupId = 'fr.beapp.bus'
     libraryArtifactId = 'bus'
-    libraryVersion = '1.1'
+    libraryVersion = '1.2-SNAPSHOT'
     libraryPackaging = 'jar'
 
     libraryDescription = 'A simple bus library based on RxJava or a sorted version based on executors'
