@@ -36,7 +36,7 @@ public class RxBus {
 	 * @param classListened The event class to listen
 	 * @return an Rx {@link Observable} on which received events will be emitted
 	 */
-	public <T> Observable<T> listen(Class<T> classListened) {
+	public <T> Observable<T> register(Class<T> classListened) {
 		return bus.ofType(classListened);
 	}
 

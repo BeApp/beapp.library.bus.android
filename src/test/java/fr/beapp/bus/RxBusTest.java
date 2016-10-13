@@ -20,8 +20,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_subscribed_noValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2);
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2);
 		rxBus.send("otherEvent");
 
 		testSubscriber1.assertNoValues();
@@ -30,8 +30,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_subscribed_oneValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2);
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2);
 		rxBus.send("otherEvent");
 		rxBus.send(1);
 
@@ -43,8 +43,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_subscribed_threeValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2);
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2);
 		rxBus.send(1);
 		rxBus.send("otherEvent");
 		rxBus.send(2);
@@ -60,8 +60,8 @@ public class RxBusTest {
 	public void testRegister_mixinSubscribed() {
 		TestSubscriber<String> testSubscriberString = TestSubscriber.create();
 
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(String.class).subscribe(testSubscriberString);
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(String.class).subscribe(testSubscriberString);
 		rxBus.send(1);
 		rxBus.send("event1");
 		rxBus.send(2);
@@ -75,8 +75,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_unsubscribed_noValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2).unsubscribe();
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2).unsubscribe();
 		rxBus.send("otherEvent");
 
 		testSubscriber1.assertNoValues();
@@ -85,8 +85,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_unsubscribed_oneValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2).unsubscribe();
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2).unsubscribe();
 		rxBus.send("otherEvent");
 		rxBus.send(1);
 
@@ -97,8 +97,8 @@ public class RxBusTest {
 
 	@Test
 	public void testRegister_unsubscribed_threeValue() {
-		rxBus.listen(Integer.class).subscribe(testSubscriber1);
-		rxBus.listen(Integer.class).subscribe(testSubscriber2).unsubscribe();
+		rxBus.register(Integer.class).subscribe(testSubscriber1);
+		rxBus.register(Integer.class).subscribe(testSubscriber2).unsubscribe();
 		rxBus.send("otherEvent");
 		rxBus.send(1);
 		rxBus.send(2);
@@ -113,7 +113,7 @@ public class RxBusTest {
 	public void testSameReference() {
 		TestSubscriber<DummyEvent> testReferenceSubscriber = TestSubscriber.create();
 
-		rxBus.listen(DummyEvent.class)
+		rxBus.register(DummyEvent.class)
 				.doOnNext(dummyEvent -> dummyEvent.setValue(2))
 				.subscribe(testReferenceSubscriber);
 		rxBus.send(new DummyEvent(1));
