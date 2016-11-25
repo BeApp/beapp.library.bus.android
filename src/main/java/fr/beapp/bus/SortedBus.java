@@ -18,7 +18,7 @@ public class SortedBus {
 	public static final int PRIORITY_LOW = 1000;
 
 	private static final SortedBus INSTANCE = new SortedBus();
-	private static final Map<Class, TreeSet<PriorityExecutor>> allExecutors = new ConcurrentHashMap<>();
+	private static final Map<Class, TreeSet<PriorityExecutor>> ALL_EXECUTORS = new ConcurrentHashMap<>();
 
 	public static SortedBus getInstance() {
 		return INSTANCE;
@@ -46,7 +46,7 @@ public class SortedBus {
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized int send(Object value, Class<?> asClazz) {
-		TreeSet<PriorityExecutor> executors = allExecutors.get(asClazz);
+		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(asClazz);
 		if (executors != null) {
 			int receiversCount = 0;
 			for (PriorityExecutor priorityExecutor : executors) {
@@ -69,10 +69,10 @@ public class SortedBus {
 	 * @return The executor's identifier
 	 */
 	public synchronized <T> int register(Class<T> classListened, int priority, Executor<T> executor) {
-		TreeSet<PriorityExecutor> executors = allExecutors.get(classListened);
+		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
 		if (executors == null) {
 			executors = new TreeSet<>();
-			allExecutors.put(classListened, executors);
+			ALL_EXECUTORS.put(classListened, executors);
 		}
 
 		PriorityExecutor priorityExecutor = new PriorityExecutor(priority, executor);
@@ -88,7 +88,7 @@ public class SortedBus {
 	 * @return <code>true</code> if the executor was found and removed, <code>false</code> otherwise
 	 */
 	public synchronized <T> boolean unregister(Class<T> classListened, int id) {
-		TreeSet<PriorityExecutor> executors = allExecutors.get(classListened);
+		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
 		if (executors != null) {
 			for (PriorityExecutor priorityExecutor : executors) {
 				if (priorityExecutor.id == id) {
@@ -107,14 +107,14 @@ public class SortedBus {
 	 * @return <code>true</code> if the executors were found and removed, <code>false</code> otherwise
 	 */
 	public synchronized <T> boolean unregisterAll(Class<T> classListened) {
-		return allExecutors.remove(classListened) != null;
+		return ALL_EXECUTORS.remove(classListened) != null;
 	}
 
 	/**
 	 * Unregister all executors
 	 */
 	public synchronized void unregisterAll() {
-		allExecutors.clear();
+		ALL_EXECUTORS.clear();
 	}
 
 	/**
