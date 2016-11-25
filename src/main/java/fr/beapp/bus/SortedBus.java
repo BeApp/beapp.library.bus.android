@@ -13,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SortedBus {
 
-	public static int PRIORITY_HIGH = 100;
-	public static int PRIORITY_MEDIUM = 500;
-	public static int PRIORITY_LOW = 1000;
+	public static final int PRIORITY_HIGH = 100;
+	public static final int PRIORITY_MEDIUM = 500;
+	public static final int PRIORITY_LOW = 1000;
 
 	private static final SortedBus INSTANCE = new SortedBus();
 	private static final Map<Class, TreeSet<PriorityExecutor>> allExecutors = new ConcurrentHashMap<>();
