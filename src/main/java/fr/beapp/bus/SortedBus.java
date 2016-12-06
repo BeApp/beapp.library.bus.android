@@ -20,11 +20,11 @@ public class SortedBus {
 	private static final SortedBus INSTANCE = new SortedBus();
 	private static final Map<Class, TreeSet<PriorityExecutor>> ALL_EXECUTORS = new ConcurrentHashMap<>();
 
-	public static SortedBus getInstance() {
-		return INSTANCE;
+	private SortedBus() {
 	}
 
-	private SortedBus() {
+	public static SortedBus getInstance() {
+		return INSTANCE;
 	}
 
 	/**
