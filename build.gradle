@@ -1,11 +1,19 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1'
+    }
+}
 repositories {
     jcenter()
 }
 
 apply plugin: 'java'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     compile 'io.reactivex:rxjava:1.2.1'
@@ -17,7 +25,7 @@ ext {
     libraryName = 'Beapp bus'
     libraryGroupId = 'fr.beapp.bus'
     libraryArtifactId = 'bus'
-    libraryVersion = '1.0'
+    libraryVersion = '1.1'
     libraryPackaging = 'jar'
 
     libraryDescription = 'A simple bus library based on RxJava or a sorted version based on executors'
@@ -34,3 +42,17 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 apply from: 'https://bitbucket.org/beappers/beapp.gradle/raw/master/publish-library.gradle'
+
+
+apply plugin: 'org.sonarqube'
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://sonar.beapp.fr'
+        property 'sonar.projectKey', "${libraryGroupId}:java"
+        property 'sonar.projectName', "${libraryName} - Java"
+        property 'sonar.projectDescription', "${libraryDescription}"
+        property 'sonar.projectVersion', "${libraryVersion}"
+        property 'sonar.sourceEncoding', 'UTF-8'
+        property 'sonar.exclusions', '**/*Test.java'
+    }
+}

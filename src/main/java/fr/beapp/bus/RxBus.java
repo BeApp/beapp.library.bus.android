@@ -16,11 +16,11 @@ public class RxBus {
 
 	private final Subject<Object, Object> bus = new SerializedSubject<>(PublishSubject.create());
 
-	public static RxBus getInstance() {
-		return INSTANCE;
+	private RxBus() {
 	}
 
-	private RxBus() {
+	public static RxBus getInstance() {
+		return INSTANCE;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class RxBus {
 	 * @param classListened The event class to listen
 	 * @return an Rx {@link Observable} on which received events will be emitted
 	 */
-	public <T> Observable<T> listen(Class<T> classListened) {
+	public <T> Observable<T> register(Class<T> classListened) {
 		return bus.ofType(classListened);
 	}
 
