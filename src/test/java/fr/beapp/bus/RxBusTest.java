@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import rx.functions.Action1;
 import rx.observers.TestSubscriber;
 
 public class RxBusTest {
@@ -114,7 +115,12 @@ public class RxBusTest {
 		TestSubscriber<DummyEvent> testReferenceSubscriber = TestSubscriber.create();
 
 		rxBus.register(DummyEvent.class)
-				.doOnNext(dummyEvent -> dummyEvent.setValue(2))
+				.doOnNext(new Action1<DummyEvent>() {
+					@Override
+					public void call(DummyEvent dummyEvent) {
+						dummyEvent.setValue(2);
+					}
+				})
 				.subscribe(testReferenceSubscriber);
 		rxBus.send(new DummyEvent(1));
 

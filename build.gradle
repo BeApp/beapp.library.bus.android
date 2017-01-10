@@ -12,8 +12,8 @@ repositories {
 
 apply plugin: 'java'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     compile 'io.reactivex:rxjava:1.2.1'
