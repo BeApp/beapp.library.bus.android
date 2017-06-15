@@ -60,6 +60,6 @@ repositories {
 }
 
 dependencies {
-    compile 'fr.beapp.cache:cache:1.0'
+    compile 'fr.beapp.bus:bus:1.1'
 }
 ```
