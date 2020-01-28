@@ -3,6 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath 'com.novoda:bintray-release:0.9.2'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
     }
 }
@@ -12,8 +13,8 @@ repositories {
 
 apply plugin: 'java'
 
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     compile "io.reactivex.rxjava2:rxjava:2.1.0"
@@ -21,28 +22,26 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
-ext {
-    libraryName = 'Beapp bus'
-    libraryGroupId = 'fr.beapp.bus'
-    libraryArtifactId = 'bus'
-    libraryVersion = '2.0'
-    libraryPackaging = 'jar'
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    userOrg = 'beapp'
+    repoName = 'beapp-maven-oss'
+    groupId = 'fr.beapp.bus'
+    artifactId = 'bus'
+    publishVersion = '2.0'
 
-    libraryDescription = 'A simple bus library based on RxJava or a sorted version based on executors'
+    uploadName = "beapp-bus"
+    desc = 'A simple bus library based on RxJava or a sorted version based on executors'
 
-    siteUrl = 'https://bitbucket.org/beappers/beapp.bus.andro'
-    gitUrl = 'git@bitbucket.org:beappers/beapp.bus.andro.git'
+    website = 'https://github.com/beapp/beapp.library.bus.android'
 
-    developerId = 'dvilleneuve'
-    developerName = 'Damien Villeneuve'
-    developerEmail = 'd.villeneuve@beapp.fr'
+    licences = ["Apache-2.0"]
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    bintrayUser = findProperty("beapp_bintray_user")
+    bintrayKey = findProperty("beapp_bintray_key")
+
+    dryRun = true
 }
-apply from: 'https://bitbucket.org/beappers/beapp.gradle/raw/master/publish-library.gradle'
-
 
 apply plugin: 'org.sonarqube'
 sonarqube {
