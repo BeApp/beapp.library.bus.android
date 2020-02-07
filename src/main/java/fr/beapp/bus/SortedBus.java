@@ -65,6 +65,7 @@ public class SortedBus {
 	 * Register a new executor to listen on the given class with a specific priority
 	 *
 	 * @param classListened The event class to listen
+	 * @param <T> The type parameter
 	 * @param priority      The priority to use
 	 * @param executor      The executor to execute when the event is received
 	 * @return The executor's identifier
@@ -85,6 +86,7 @@ public class SortedBus {
 	 * Unregister an executor for a given class by using his registration's identifier
 	 *
 	 * @param classListened The class listened by the executor
+	 * @param <T> The type parameter
 	 * @param id            The registration identifier
 	 * @return <code>true</code> if the executor was found and removed, <code>false</code> otherwise
 	 */
@@ -105,6 +107,7 @@ public class SortedBus {
 	 * Unregister all executors for a given class
 	 *
 	 * @param classListened The class listened by the executor
+	 * @param <T> The type parameter
 	 * @return <code>true</code> if the executors were found and removed, <code>false</code> otherwise
 	 */
 	public synchronized <T> boolean unregisterAll(Class<T> classListened) {

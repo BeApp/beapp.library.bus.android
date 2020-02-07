@@ -6,7 +6,7 @@ import io.reactivex.subjects.Subject;
 
 /**
  * This class provides a bus implementation based on RxJava.
- * <br/>
+ * <br>
  * Inspired from: http://nerds.weddingpartyapp.com/tech/2014/12/24/implementing-an-event-bus-with-rxjava-rxbus/
  */
 public class RxBus {
@@ -33,6 +33,7 @@ public class RxBus {
 
 	/**
 	 * @param classListened The event class to listen
+	 * @param <T> The type parameter
 	 * @return an Rx {@link Observable} on which received events will be emitted
 	 */
 	public <T> Observable<T> register(Class<T> classListened) {
