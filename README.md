@@ -50,16 +50,14 @@ SortedBus.getInstance().send(new MessageEvent());
 
 # Installation
 
-Add Beapp's repository in your project's repositories list, then add the dependency.
+Add jcenter's repository in your project's repositories list, then add the dependency.
 
 ```groovy
 repositories {
     jcenter()
-    // ...
-    maven { url 'http://repository.beapp.fr/libs-release-local' }
 }
 
 dependencies {
-    compile 'fr.beapp.cache:cache:1.0'
+    implementation 'fr.beapp.bus:bus:<latest-release>'
 }
 ```

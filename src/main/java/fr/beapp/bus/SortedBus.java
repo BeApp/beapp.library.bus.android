@@ -1,6 +1,7 @@
 package fr.beapp.bus;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,7 +19,7 @@ public class SortedBus {
 	public static final int PRIORITY_LOW = 1000;
 
 	private static final SortedBus INSTANCE = new SortedBus();
-	private static final Map<Class, TreeSet<PriorityExecutor>> ALL_EXECUTORS = new ConcurrentHashMap<>();
+	private static final Map<Class, Set<PriorityExecutor>> ALL_EXECUTORS = new ConcurrentHashMap<>();
 
 	private SortedBus() {
 	}
@@ -46,30 +47,31 @@ public class SortedBus {
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized int send(Object value, Class<?> asClazz) {
-		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(asClazz);
+		int receiversCount = 0;
+
+		Set<PriorityExecutor> executors = ALL_EXECUTORS.get(asClazz);
 		if (executors != null) {
-			int receiversCount = 0;
 			for (PriorityExecutor priorityExecutor : executors) {
 				receiversCount++;
 				if (priorityExecutor.executor.execute(value)) {
 					break;
 				}
 			}
-			return receiversCount;
 		}
-		return 0;
+		return receiversCount;
 	}
 
 	/**
 	 * Register a new executor to listen on the given class with a specific priority
 	 *
 	 * @param classListened The event class to listen
+	 * @param <T> The type parameter
 	 * @param priority      The priority to use
 	 * @param executor      The executor to execute when the event is received
 	 * @return The executor's identifier
 	 */
 	public synchronized <T> int register(Class<T> classListened, int priority, Executor<T> executor) {
-		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
+		Set<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
 		if (executors == null) {
 			executors = new TreeSet<>();
 			ALL_EXECUTORS.put(classListened, executors);
@@ -84,11 +86,12 @@ public class SortedBus {
 	 * Unregister an executor for a given class by using his registration's identifier
 	 *
 	 * @param classListened The class listened by the executor
+	 * @param <T> The type parameter
 	 * @param id            The registration identifier
 	 * @return <code>true</code> if the executor was found and removed, <code>false</code> otherwise
 	 */
 	public synchronized <T> boolean unregister(Class<T> classListened, int id) {
-		TreeSet<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
+		Set<PriorityExecutor> executors = ALL_EXECUTORS.get(classListened);
 		if (executors != null) {
 			for (PriorityExecutor priorityExecutor : executors) {
 				if (priorityExecutor.id == id) {
@@ -104,6 +107,7 @@ public class SortedBus {
 	 * Unregister all executors for a given class
 	 *
 	 * @param classListened The class listened by the executor
+	 * @param <T> The type parameter
 	 * @return <code>true</code> if the executors were found and removed, <code>false</code> otherwise
 	 */
 	public synchronized <T> boolean unregisterAll(Class<T> classListened) {
