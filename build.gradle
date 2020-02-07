@@ -28,7 +28,7 @@ publish {
     repoName = 'beapp-maven-oss'
     groupId = 'fr.beapp.bus'
     artifactId = 'bus'
-    publishVersion = '2.0'
+    publishVersion = '2.1'
 
     uploadName = "beapp-bus"
     desc = 'A simple bus library based on RxJava or a sorted version based on executors'
