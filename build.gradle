@@ -22,16 +22,22 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
+ext {
+    libraryVersion = '2.1'
+    libraryGroupId = 'fr.beapp.bus'
+    libraryDescription = 'A simple bus library based on RxJava or a sorted version based on executors'
+}
+
 apply plugin: 'com.novoda.bintray-release'
 publish {
     userOrg = 'beapp'
     repoName = 'beapp-maven-oss'
-    groupId = 'fr.beapp.bus'
+    groupId = libraryGroupId
     artifactId = 'bus'
-    publishVersion = '2.1'
+    publishVersion = libraryVersion
 
     uploadName = "beapp-bus"
-    desc = 'A simple bus library based on RxJava or a sorted version based on executors'
+    desc = libraryDescription
 
     website = 'https://github.com/beapp/beapp.library.bus.android'
 
@@ -48,7 +54,7 @@ sonarqube {
     properties {
         property 'sonar.host.url', 'https://sonar.beapp.fr'
         property 'sonar.projectKey', "${libraryGroupId}:java"
-        property 'sonar.projectName', "${libraryName} - Java"
+        property 'sonar.projectName', "Beapp bus - Java"
         property 'sonar.projectDescription', "${libraryDescription}"
         property 'sonar.projectVersion', "${libraryVersion}"
         property 'sonar.sourceEncoding', 'UTF-8'
